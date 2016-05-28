@@ -8,8 +8,25 @@
           href="webjars/skeleton-css/2.0.4/css/skeleton.css"/>
 </head>
 <body>
-<div>
-<!-- Put signup button here -->
+<div class="container">
+<!-- Put sign-up button here -->
+<span th:text="${data}"></span>
+
+<form method = "POST" action = "/registration/create">
+    <div class="row">
+        <div class="six columns">
+            <label for="email">Your email</label>
+            <input class = "u-full-width" placeholder = "test@mailbox.com" type = "email" name = "email"/>
+        </div>
+        <div class="six columns">
+            <label for = "password">Your password</label>
+            <input class = "u-full-width" placeholder = "test@mailbox.com" type = "password" name = "password"/>
+        </div>
+    </div>
+    <div class="row">
+        <button type="submit" class = "button-primary">Sign up</button>
+    </div>
+</form>
 </div>
 </body>
 </html>
