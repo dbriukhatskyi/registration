@@ -43,13 +43,13 @@
 		<dependency>
     		<groupId>org.hsqldb</groupId>
     		<artifactId>hsqldb</artifactId>
-    		<version>2.3.3</version>
+    		<version>2.3.3</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
         <!-- Hibernate validator -->
 		<dependency>
     		<groupId>org.hibernate</groupId>
     		<artifactId>hibernate-validator</artifactId>
-    		<version>5.2.4.Final</version>
+    		<version>5.2.4.Final</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 		<!-- Skeleton CSS -->
 		<dependency>
@@ -75,7 +75,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5</version>
+                <version>3.5</version><!--$NO-MVN-MAN-VER$-->
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>

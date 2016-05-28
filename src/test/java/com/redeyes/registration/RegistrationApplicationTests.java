@@ -1,4 +1,4 @@
-package com.redeyes;
+package com.redeyes.registration;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
