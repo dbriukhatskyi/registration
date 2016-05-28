@@ -10,6 +10,14 @@
 <body>
 <div>
 <!-- Put signup button here -->
+<form action="/registration" method="post" th:action="@{/registration}">
+    <p>Email</p>
+    <input type="email" name="email"/>
+    <p>Password</p>
+    <input type="password" name="password"/>
+    <button type="submit">Create Account</button>
+</form>
 </div>
+<p th:text="${user}"></p>
 </body>
 </html>

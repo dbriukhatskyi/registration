@@ -2,6 +2,7 @@ package com.redeyes.registration;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /***
  * Entry point for Registration Service.
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Dmytro Briukhatskyi
  */
 @SpringBootApplication
+@ComponentScan
 public class RegistrationApplication {
     /**
      * An entry point for application.
