@@ -6,18 +6,44 @@
     <link rel="stylesheet"
           th:href="@{/webjars/skeleton-css/2.0.4/css/skeleton.css}"
           href="webjars/skeleton-css/2.0.4/css/skeleton.css"/>
+    <style>
+        #sign {
+        }
+    </style>
+    <script type="text/javascript" src="webjars/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#form").hide();
+            $("#confirm").hide();
+        });
+        function sign() {
+            $("#form").show();
+            $("#sign").hide();
+        }
+        function post() {
+            $.ajax({
+                url: "/rest",
+                type: 'post',
+                data: $("#form").serialize()
+            });
+            $("#form").hide();
+            $("#confirm").show();
+        }
+    </script>
 </head>
 <body>
+<button id="sign" onclick="sign()">Sign Up</button>
 <div>
-<!-- Put signup button here -->
-<form action="/registration" method="post" th:action="@{/registration}">
-    <p>Email</p>
-    <input type="email" name="email"/>
-    <p>Password</p>
-    <input type="password" name="password"/>
-    <button type="submit">Create Account</button>
-</form>
+    <form id="form">
+        <p>Email</p>
+        <input type="email" id="email" name="email"/>
+        <p>Password</p>
+        <input type="password" id="password" name="password"/>
+        <button onclick="post()">Create Account</button>
+    </form>
 </div>
-<p th:text="${user}"></p>
+<div id="confirm">
+    Success! Check your email!
+</div>
 </body>
 </html>

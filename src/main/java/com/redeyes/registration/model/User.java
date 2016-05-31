@@ -1,19 +1,39 @@
 package com.redeyes.registration.model;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 public class User {
     @Email
     private String email;
-    @NotNull
+    @NotEmpty
+    @Pattern(regexp = ".*!.*")
     private String password;
+
     private boolean is_confirmed = false;
+
+    public User() {
+    }
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+
+    public User(String email, String password, boolean is_confirmed) {
+        this.email = email;
+        this.password = password;
+        this.is_confirmed = is_confirmed;
+    }
+
+    public boolean is_confirmed() {
+        return is_confirmed;
+    }
+
+    public void setIs_confirmed(boolean is_confirmed) {
+        this.is_confirmed = is_confirmed;
     }
 
     public String getEmail() {
@@ -32,13 +52,6 @@ public class User {
         this.password = password;
     }
 
-    public boolean is_confirmed() {
-        return is_confirmed;
-    }
-
-    public void setIs_confirmed(boolean is_confirmed) {
-        this.is_confirmed = is_confirmed;
-    }
 
     @Override
     public String toString() {
