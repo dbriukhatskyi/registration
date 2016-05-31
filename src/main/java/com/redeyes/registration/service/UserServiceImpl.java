@@ -15,9 +15,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(User user) {
-        logger.info("Saving: " + user);
         repository.save(user);
-        logger.info("Save OK!");
         // send confirm email
     }
 }

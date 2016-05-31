@@ -9,11 +9,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class RegistrationController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RegistrationController.class);
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView home() {
-        LOGGER.info("IN GET");
+        LOG.info("Return main view.");
         return new ModelAndView("registration");
     }
 }

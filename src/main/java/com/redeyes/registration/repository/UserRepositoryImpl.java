@@ -12,10 +12,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserRepositoryImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserRepositoryImpl.class);
 
     private static final RowMapper<User> ROW_MAPPER = (rs, rowNum) ->
-            new User(rs.getString("email"), rs.getString("password"),rs.getBoolean("is_confirmed"));
+            new User(rs.getString("email"), rs.getString("password"), rs.getBoolean("is_confirmed"));
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -25,22 +25,22 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public int save(User user) {
-        LOGGER.info("Save :" + user);
+        LOG.info("Save :" + user);
         String sql = "INSERT INTO users(email, password, is_confirmed) VALUES(?,?,?)";
-        int update = jdbcTemplate.update(sql, user.getEmail(), user.getPassword(), false);
-        LOGGER.info("Save OK");
+        int update = jdbcTemplate.update(sql, user.getEmail(), user.getPassword(), user.isConfirmed());
+        LOG.info("Saving success.");
         return update;
     }
 
     @Override
     public User getByEmail(String email) {
-        LOGGER.info("GET BY EMAIL!");
+        LOG.info("Get by email.");
         return jdbcTemplate.queryForObject("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
     }
 
     @Override
     public void confirm(User user) {
-        LOGGER.info("Confirm");
+        LOG.info("Confirm user");
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("is_confirmed", true)
                 .addValue("email", user.getEmail());
