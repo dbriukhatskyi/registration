@@ -1,6 +1,8 @@
 package com.redeyes.registration.web;
 
+import com.redeyes.registration.model.User;
 import com.redeyes.registration.model.UserTo;
+import com.redeyes.registration.service.MessageService;
 import com.redeyes.registration.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +18,14 @@ public class RestController {
     @Autowired
     private UserService service;
 
+    @Autowired
+    private MessageService messageService;
+
     @RequestMapping(method = RequestMethod.POST)
-    public void getUser(UserTo user) {
+    public void saveUser(UserTo userTo) {
         LOG.info("Rest. Save user");
-        service.saveUser(user.asUser());
+        User user = userTo.asUser();
+        service.saveUser(user);
+        messageService.sendConfirmToUser(user);
     }
 }

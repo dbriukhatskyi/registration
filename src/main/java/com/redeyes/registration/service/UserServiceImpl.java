@@ -16,6 +16,5 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(User user) {
         repository.save(user);
-        // send confirm email
     }
 }
