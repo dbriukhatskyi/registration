@@ -1,32 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Registration Service</title>
-    <link rel="stylesheet"
-          th:href="@{/webjars/skeleton-css/2.0.4/css/skeleton.css}"
-          href="webjars/skeleton-css/2.0.4/css/skeleton.css"/>
+<meta charset="UTF-8" />
+<title>Registration Service</title>
+<link rel="stylesheet" th:href="@{/webjars/skeleton-css/2.0.4/css/skeleton.css}"
+  href="webjars/skeleton-css/2.0.4/css/skeleton.css" />
+  <script th:src="@{/webjars/jquery/2.1.4/jquery.min.js}" src="webjars/jquery/2.1.4/jquery.min.js" 
+          type="text/javascript"></script>
+
 </head>
 <body>
-<div class="container">
-<!-- Put sign-up button here -->
-<span th:text="${data}"></span>
-
-<form method = "POST" action = "/registration/create">
-    <div class="row">
+  <div class="container" id="main-area">
+    <!-- Put sign-up button here -->
+    <p id="message"></p>
+    <form id="user-data" th:object="${data}" action="#" method="POST">
+      <div class="row">
         <div class="six columns">
-            <label for="email">Your email</label>
-            <input class = "u-full-width" placeholder = "test@mailbox.com" type = "email" name = "email"/>
+          <label for="email">Your email</label> 
+          <input class="u-full-width" th:field="*{email}" placeholder="you@yourdomain.com" type="email" name="email" />
         </div>
         <div class="six columns">
-            <label for = "password">Your password</label>
-            <input class = "u-full-width" placeholder = "test@mailbox.com" type = "password" name = "password"/>
+          <label for="password">Your password</label> 
+          <input class="u-full-width" th:field="*{password}" placeholder="password" type="password" name="password" />
         </div>
-    </div>
-    <div class="row">
-        <button type="submit" class = "button-primary">Sign up</button>
-    </div>
-</form>
-</div>
+      </div>
+      <div class="row">
+        <button type="submit" class="button-primary">Sign up</button>
+      </div>
+    </form>
+  </div>
+  
+  <script th:src="@{/js/formsend.js}" src="/js/formsend.js" type="text/javascript"></script>
 </body>
 </html>
