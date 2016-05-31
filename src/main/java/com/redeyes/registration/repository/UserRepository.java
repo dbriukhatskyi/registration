@@ -7,5 +7,5 @@ public interface UserRepository {
 
     User getByEmail(String email);
 
-    void confirm(User user);
+    void confirm(String email);
 }

@@ -17,4 +17,9 @@ public class UserServiceImpl implements UserService {
     public void saveUser(User user) {
         repository.save(user);
     }
+
+    @Override
+    public void confirm(String email) {
+        repository.confirm(email);
+    }
 }

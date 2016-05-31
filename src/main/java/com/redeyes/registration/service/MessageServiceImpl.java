@@ -9,6 +9,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class MessageServiceImpl implements MessageService {

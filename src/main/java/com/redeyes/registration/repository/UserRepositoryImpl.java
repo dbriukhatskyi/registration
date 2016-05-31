@@ -39,12 +39,17 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void confirm(User user) {
+    public void confirm(String email) {
         LOG.info("Confirm user");
-        MapSqlParameterSource map = new MapSqlParameterSource()
-                .addValue("is_confirmed", true)
-                .addValue("email", user.getEmail());
-        namedParameterJdbcTemplate.update(
-                "UPDATE users SET is_confirmed=:is_confirmed WHERE email=:email", map);
+        if (getByEmail(email) != null) {
+            MapSqlParameterSource map = new MapSqlParameterSource()
+                    .addValue("is_confirmed", true)
+                    .addValue("email", email);
+            namedParameterJdbcTemplate.update(
+                    "UPDATE users SET is_confirmed=:is_confirmed WHERE email=:email", map);
+            LOG.info("User confirmed.");
+        } else {
+            LOG.info("User is not confirm.");
+        }
     }
 }
