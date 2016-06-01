@@ -23,21 +23,21 @@ public class EmailSender {
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
         props.setProperty("mail.smtp.port", "587");
 
-        LOG.info("Creating session...");
         Session mailSession = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication("red.eyes.developers@gmail.com", "redeyes2");
                     }
                 });
-        LOG.info("Session created.");
 
         MimeMessage message = new MimeMessage(mailSession);
         message.setSubject(email.getSubject());
         message.setContent(email.getEmailText(), "text/html");
         message.addRecipient(Message.RecipientType.TO,
                 new InternetAddress(email.getRecipient()));
+
         LOG.info("Email send to {}", email.getRecipient());
+
         Transport transport = mailSession.getTransport();
         transport.connect();
         transport.sendMessage(message,
