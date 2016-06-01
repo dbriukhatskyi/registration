@@ -1,57 +1,106 @@
 package com.redeyes.registration.model;
 
+/**
+ * User model.
+ */
 public class User {
 
+    /**
+     * User email.
+     */
     private String email;
 
+    /**
+     * User password.
+     */
     private String password;
 
+    /**
+     * User confirmed.
+     */
     private boolean isConfirmed = false;
 
+    /**
+     * Non-parameter constructor.
+     */
     public User() {
     }
 
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
+    /**
+     * Constructor.
+     *
+     * @param mail User email.
+     * @param pass User password.
+     */
+    public User(final String mail, final String pass) {
+        this.email = mail;
+        this.password = pass;
     }
 
-    public User(String email, String password, boolean isConfirmed) {
-        this.email = email;
-        this.password = password;
-        this.isConfirmed = isConfirmed;
+    /**
+     * Constructor.
+     *
+     * @param mail      User email.
+     * @param pass      User password.
+     * @param confirmed User confirmed.
+     */
+    public User(final String mail, final String pass, final boolean confirmed) {
+        this.email = mail;
+        this.password = pass;
+        this.isConfirmed = confirmed;
     }
 
-    public boolean isConfirmed() {
+    /**
+     * User confirmed.
+     *
+     * @return User confirmed.
+     */
+    public final boolean isConfirmed() {
         return isConfirmed;
     }
 
-    public void setConfirmed(boolean confirmed) {
-        isConfirmed = confirmed;
-    }
-
-    public String getEmail() {
+    /**
+     * User email.
+     *
+     * @return User confirmed.
+     */
+    public final String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    /**
+     * Set user email.
+     *
+     * @param mail User email.
+     */
+    public final void setEmail(final String mail) {
+        this.email = mail;
     }
 
-    public String getPassword() {
+    /**
+     * User password.
+     *
+     * @return User password.
+     */
+    public final String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    /**
+     * Set user password.
+     *
+     * @param pass User password.
+     */
+    public final void setPassword(final String pass) {
+        this.password = pass;
     }
 
     @Override
-    public String toString() {
-        return "User{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", isConfirmed=" + isConfirmed +
-                '}';
+    public final String toString() {
+        return "User{"
+                + "email='" + email + '\''
+                + ", password='" + password + '\''
+                + ", isConfirmed=" + isConfirmed
+                + '}';
     }
 }

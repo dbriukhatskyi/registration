@@ -5,12 +5,24 @@ import com.redeyes.registration.model.User;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 
+/**
+ * Create email message.
+ */
 @Component
-public class EmailConstructor {
+public final class EmailConstructor {
+    /**
+     * Non.. constructor.
+     */
     private EmailConstructor() {
     }
 
-    public static Email createForUser(User user) {
+    /**
+     * Create email message for user.
+     *
+     * @param user User.
+     * @return Email message.
+     */
+    public static Email createForUser(final User user) {
         Email email = new Email();
         email.setRecipient(user.getEmail());
         email.setSubject("Confirm your email!");
@@ -23,8 +35,8 @@ public class EmailConstructor {
         }
         String passStar = new String(chars);
 
-        String link = "http://localhost:8080/confirm/" +
-                Base64Utils.encodeToString((user.getEmail() + ":" + user.getPassword()).getBytes());
+        String link = "http://localhost:8080/confirm/"
+                + Base64Utils.encodeToString((user.getEmail() + ":" + user.getPassword()).getBytes());
 
         emailText.append("<h1>Thank you for registration.</h1><br>")
                 .append("You have succesfully created account on our site.<br>")
