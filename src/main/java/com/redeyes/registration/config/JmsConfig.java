@@ -8,27 +8,48 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.core.JmsTemplate;
 
+/**
+ * JMS Configuration.
+ */
 @Configuration
 public class JmsConfig {
-    public static final String JMS_QUEUE = "RED_EYES_CONFIRM";
+    /**
+     * ActiveMQ queue name.
+     */
+    private static final String JMS_QUEUE = "RED_EYES_CONFIRM";
 
+    /**
+     * JMS Template.
+     *
+     * @return JMS Template.
+     */
     @Bean
-    public JmsTemplate jmsTemplate() {
+    public final JmsTemplate jmsTemplate() {
         JmsTemplate jmsTemplate = new JmsTemplate();
         jmsTemplate.setConnectionFactory(new ActiveMQConnectionFactory("tcp://localhost:61616"));
         jmsTemplate.setDefaultDestination(new ActiveMQQueue(JMS_QUEUE));
         return jmsTemplate;
     }
 
+    /**
+     * Custom jms send message.
+     *
+     * @return Custom jms sender.
+     */
     @Bean
-    public JmsEmailProduser emailProduser() {
+    public final JmsEmailProduser emailProduser() {
         JmsEmailProduser jmsEmailProduser = new JmsEmailProduser();
         jmsEmailProduser.setJmsTemplate(jmsTemplate());
         return jmsEmailProduser;
     }
 
+    /**
+     * Custom jms receive message.
+     *
+     * @return Custom jms receiver.
+     */
     @Bean
-    public JmsEmailConsumer emailConsumer() {
+    public final JmsEmailConsumer emailConsumer() {
         JmsEmailConsumer jmsEmailConsumer = new JmsEmailConsumer();
         jmsEmailConsumer.setJmsTemplate(jmsTemplate());
         return jmsEmailConsumer;
