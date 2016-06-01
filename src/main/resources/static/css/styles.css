@@ -1,0 +1,16 @@
+.error-field {
+	border-color: red !important;
+}
+
+.error-message {
+	color: red !important;
+}
+
+.invisible {
+	display: none !important;
+}
+
+#user-data.loading {
+    color: transparent;
+    background-position: 0 100%;
+}
