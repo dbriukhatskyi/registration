@@ -12,18 +12,30 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 
+/**
+ * Message service implementation.
+ */
 @Service
 public class MessageServiceImpl implements MessageService {
+    /**
+     * Logger for message service.
+     */
     private static final Logger LOG = LoggerFactory.getLogger(MessageServiceImpl.class);
 
+    /**
+     * Custom message sender.
+     */
     @Autowired
     private JmsEmailProduser emailProduser;
 
+    /**
+     * Custom message receiver.
+     */
     @Autowired
     private JmsEmailConsumer emailConsumer;
 
     @Override
-    public void sendConfirmToUser(User user) {
+    public final void sendConfirmToUser(final User user) {
         emailProduser.sendEmail(EmailConstructor.createForUser(user));
         LOG.info("Message send to queue.");
         try {

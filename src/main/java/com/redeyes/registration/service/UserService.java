@@ -2,8 +2,21 @@ package com.redeyes.registration.service;
 
 import com.redeyes.registration.model.User;
 
+/**
+ * User service.
+ */
 public interface UserService {
-    void saveUser(User user);
+    /**
+     * Save user to repository.
+     *
+     * @param user User for save.
+     */
+    void saveUser(final User user);
 
-    void confirm(String email);
+    /**
+     * Confirm user.
+     *
+     * @param email User email.
+     */
+    void confirm(final String email);
 }
