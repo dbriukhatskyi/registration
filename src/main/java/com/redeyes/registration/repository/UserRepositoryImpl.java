@@ -10,21 +10,36 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+/**
+ * User repository.
+ */
 @Repository
 public class UserRepositoryImpl implements UserRepository {
+    /**
+     * Logger for repository.
+     */
     private static final Logger LOG = LoggerFactory.getLogger(UserRepositoryImpl.class);
 
+    /**
+     * Row mapper for user.
+     */
     private static final RowMapper<User> ROW_MAPPER = (rs, rowNum) ->
             new User(rs.getString("email"), rs.getString("password"), rs.getBoolean("is_confirmed"));
 
+    /**
+     * For query.
+     */
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * For named query.
+     */
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public int save(User user) {
+    public final int save(final User user) {
         LOG.info("Save :" + user);
         String sql = "INSERT INTO users(email, password, is_confirmed) VALUES(?,?,?)";
         int update = jdbcTemplate.update(sql, user.getEmail(), user.getPassword(), user.isConfirmed());
@@ -33,13 +48,13 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User getByEmail(String email) {
+    public final User getByEmail(final String email) {
         LOG.info("Get by email.");
         return jdbcTemplate.queryForObject("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
     }
 
     @Override
-    public void confirm(String email) {
+    public final void confirm(final String email) {
         LOG.info("Confirm user");
         if (getByEmail(email) != null) {
             MapSqlParameterSource map = new MapSqlParameterSource()

@@ -2,10 +2,27 @@ package com.redeyes.registration.repository;
 
 import com.redeyes.registration.model.User;
 
+/**
+ * User repository.
+ */
 public interface UserRepository {
-    int save(User user);
+    /**
+     * Save user to repository.
+     * @param user User for save.
+     * @return int.
+     */
+    int save(final User user);
 
-    User getByEmail(String email);
+    /**
+     * Find user by email.
+     * @param email Email for search.
+     * @return User from repository.
+     */
+    User getByEmail(final String email);
 
-    void confirm(String email);
+    /**
+     * Confirm user.
+     * @param email Email to confirm user.
+     */
+    void confirm(final String email);
 }
