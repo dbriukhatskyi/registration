@@ -12,7 +12,7 @@ public class JmsEmailProduser extends JmsGatewaySupport {
      *
      * @param email Email to send.
      */
-    public void sendEmail(final Email email) {
+    public final void sendEmail(final Email email) {
         getJmsTemplate().convertAndSend(email);
     }
 }
