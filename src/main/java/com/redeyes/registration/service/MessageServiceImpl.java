@@ -19,6 +19,11 @@ public class MessageServiceImpl implements MessageService {
     private static final Logger LOG = LoggerFactory.getLogger(MessageServiceImpl.class);
 
     /**
+     * Email constructor.
+     */
+    @Autowired
+    private EmailConstructor constructor;
+    /**
      * Custom message sender.
      */
     @Autowired
@@ -27,6 +32,6 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public final void sendConfirmToUser(final User user) {
         LOG.info("Send email to activeMQ.");
-        emailProduser.sendEmail(EmailConstructor.createForUser(user));
+        emailProduser.sendEmail(constructor.createForUser(user));
     }
 }
