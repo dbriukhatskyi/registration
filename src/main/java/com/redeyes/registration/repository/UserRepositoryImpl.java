@@ -39,12 +39,11 @@ public class UserRepositoryImpl implements UserRepository {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public int save(final User user) {
+    public void save(final User user) {
         LOG.info("Save :" + user);
         String sql = "INSERT INTO users(email, password, is_confirmed) VALUES(?,?,?)";
-        int update = jdbcTemplate.update(sql, user.getEmail(), user.getPassword(), user.isConfirmed());
+        jdbcTemplate.update(sql, user.getEmail(), user.getPassword(), user.isConfirmed());
         LOG.info("Saving success.");
-        return update;
     }
 
     @Override

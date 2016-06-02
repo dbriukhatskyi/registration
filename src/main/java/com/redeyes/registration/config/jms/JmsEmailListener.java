@@ -16,17 +16,20 @@ import static com.redeyes.registration.config.JmsConfig.JMS_QUEUE;
  */
 @Component
 public class JmsEmailListener {
+    /**
+     * Logger for jms listener.
+     */
     private static final Logger LOG = LoggerFactory.getLogger(JmsEmailListener.class);
 
     /**
      * Receive email message and send to user.
+     *
+     * @param email Email to send confirm.
      */
     @JmsListener(destination = JMS_QUEUE, containerFactory = "factory")
-    public void receiveEmail(Email email) {
-        LOG.info("Email received.");
+    public final void receiveEmail(final Email email) {
         try {
             EmailSender.sendConfirm(email);
-            LOG.info("Email send.");
         } catch (MessagingException e) {
             LOG.info("Send email error: {}", e);
         }

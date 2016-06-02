@@ -8,13 +8,14 @@ import com.redeyes.registration.model.User;
 public interface UserRepository {
     /**
      * Save user to repository.
+     *
      * @param user User for save.
-     * @return int.
      */
-    int save(final User user);
+    void save(final User user);
 
     /**
      * Find user by email.
+     *
      * @param email Email for search.
      * @return User from repository.
      */
@@ -22,6 +23,7 @@ public interface UserRepository {
 
     /**
      * Confirm user.
+     *
      * @param email Email to confirm user.
      */
     void confirm(final String email);

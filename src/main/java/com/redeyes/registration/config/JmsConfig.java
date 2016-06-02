@@ -5,7 +5,6 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
@@ -14,13 +13,11 @@ import org.springframework.jms.core.JmsTemplate;
  * JMS Configuration.
  */
 @Configuration
-@EnableJms
 public class JmsConfig {
     /**
      * ActiveMQ queue name.
      */
     public static final String JMS_QUEUE = "RED_EYES_CONFIRM";
-
 
     /**
      * ActiveMQ connection factory.
