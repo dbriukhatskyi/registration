@@ -51,7 +51,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     @Transactional(readOnly = true)
     public final User getByEmail(final String email) {
-        LOG.info("Get by email.");
+        LOG.info("Get user by email: {}", email);
         return jdbcTemplate.queryForObject("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
     }
 
