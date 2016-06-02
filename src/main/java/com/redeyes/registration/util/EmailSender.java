@@ -34,7 +34,7 @@ public final class EmailSender {
     }
 
     /**
-     * Sending confirm email.
+     * Sending confir email.
      *
      * @param email User email.
      * @throws MessagingException Messaging Exception.
