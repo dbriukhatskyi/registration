@@ -1,0 +1,22 @@
+.error-field {
+	border-color: red !important;
+}
+
+.error-message {
+	color: red !important;
+}
+
+.invisible {
+	display: none !important;
+}
+
+.centered {
+    display: table;
+    margin: 0 auto;
+}
+
+
+#user-data.loading {
+    color: transparent;
+    background-position: 0 100%;
+}
