@@ -2,8 +2,14 @@ package com.redeyes.registration.util;
 
 import com.redeyes.registration.model.Email;
 import com.redeyes.registration.model.User;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
+
+import java.io.StringWriter;
 
 /**
  * Create email message.
@@ -13,8 +19,14 @@ public final class EmailConstructor {
     /**
      * Non.. constructor.
      */
-    private EmailConstructor() {
+    public EmailConstructor() {
     }
+
+    /**
+     * Velocity engine.
+     */
+    @Autowired
+    private VelocityEngine velocityEngine;
 
     /**
      * Create email message for user.
@@ -22,7 +34,7 @@ public final class EmailConstructor {
      * @param user User.
      * @return Email message.
      */
-    public static Email createForUser(final User user) {
+    public Email createForUser(final User user) {
         Email email = new Email();
         email.setRecipient(user.getEmail());
         email.setSubject("Confirm your email!");
@@ -36,7 +48,7 @@ public final class EmailConstructor {
      * @param user User to hide password.
      * @return Hidden password string.
      */
-    private static String getStarPass(final User user) {
+    private String getStarPass(final User user) {
         char[] chars = user.getPassword().toCharArray();
         for (int i = 0; i < chars.length - 2; i++) {
             chars[i] = '*';
@@ -50,7 +62,7 @@ public final class EmailConstructor {
      * @param user User for confirm.
      * @return Confirmation link.
      */
-    private static String getConfirmLink(final User user) {
+    private String getConfirmLink(final User user) {
         return "http://localhost:8080/confirm/"
                 + Base64Utils.encodeToString((user.getEmail() + ":" + user.getPassword()).getBytes());
     }
@@ -61,15 +73,15 @@ public final class EmailConstructor {
      * @param user User to create email text.
      * @return Email text.
      */
-    private static String getEmailText(final User user) {
-        StringBuilder emailText = new StringBuilder();
-        emailText.append("<h1>Thank you for registration.</h1><br>")
-                .append("You have succesfully created account on our site.<br>")
-                .append("You email is ").append(user.getEmail()).append(" and you pass ends on ")
-                .append(getStarPass(user))
-                .append("<br><br>")
-                .append("To confirm your account please click on this link<br>")
-                .append(getConfirmLink(user));
-        return emailText.toString();
+    private String getEmailText(final User user) {
+        Template template = velocityEngine.getTemplate("email.vm");
+        VelocityContext context = new VelocityContext();
+        context.put("email", user.getEmail());
+        context.put("pass", getStarPass(user));
+        context.put("link", getConfirmLink(user));
+
+        StringWriter writer = new StringWriter();
+        template.merge(context, writer);
+        return writer.toString();
     }
 }
