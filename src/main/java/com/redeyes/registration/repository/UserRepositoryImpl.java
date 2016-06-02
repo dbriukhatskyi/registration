@@ -9,11 +9,13 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * User repository.
  */
 @Repository
+@Transactional
 public class UserRepositoryImpl implements UserRepository {
     /**
      * Logger for repository.
@@ -39,7 +41,7 @@ public class UserRepositoryImpl implements UserRepository {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public void save(final User user) {
+    public final void save(final User user) {
         LOG.info("Save :" + user);
         String sql = "INSERT INTO users(email, password, is_confirmed) VALUES(?,?,?)";
         jdbcTemplate.update(sql, user.getEmail(), user.getPassword(), user.isConfirmed());
@@ -47,13 +49,14 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User getByEmail(final String email) {
+    @Transactional(readOnly = true)
+    public final User getByEmail(final String email) {
         LOG.info("Get by email.");
         return jdbcTemplate.queryForObject("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
     }
 
     @Override
-    public void confirm(final String email) {
+    public final void confirm(final String email) {
         LOG.info("Confirm user");
         if (getByEmail(email) != null) {
             MapSqlParameterSource map = new MapSqlParameterSource()
