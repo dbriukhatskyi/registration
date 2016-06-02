@@ -1,9 +1,11 @@
 package com.redeyes.registration.model;
 
+import java.io.Serializable;
+
 /**
  * Email model.
  */
-public class Email {
+public class Email implements Serializable {
     /**
      * Email rec.
      */

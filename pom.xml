@@ -42,11 +42,6 @@
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-broker</artifactId>
         </dependency>
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.4.7</version>
-        </dependency>
         <!-- DataBase -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

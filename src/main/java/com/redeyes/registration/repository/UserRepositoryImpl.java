@@ -39,7 +39,7 @@ public class UserRepositoryImpl implements UserRepository {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public final int save(final User user) {
+    public int save(final User user) {
         LOG.info("Save :" + user);
         String sql = "INSERT INTO users(email, password, is_confirmed) VALUES(?,?,?)";
         int update = jdbcTemplate.update(sql, user.getEmail(), user.getPassword(), user.isConfirmed());
@@ -48,13 +48,13 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public final User getByEmail(final String email) {
+    public User getByEmail(final String email) {
         LOG.info("Get by email.");
         return jdbcTemplate.queryForObject("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
     }
 
     @Override
-    public final void confirm(final String email) {
+    public void confirm(final String email) {
         LOG.info("Confirm user");
         if (getByEmail(email) != null) {
             MapSqlParameterSource map = new MapSqlParameterSource()

@@ -1,22 +1,50 @@
 package com.redeyes.registration.config;
 
-import com.redeyes.registration.config.jms.JmsEmailConsumer;
 import com.redeyes.registration.config.jms.JmsEmailProduser;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jms.annotation.EnableJms;
+import org.springframework.jms.config.JmsListenerContainerFactory;
+import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
 
 /**
  * JMS Configuration.
  */
 @Configuration
+@EnableJms
 public class JmsConfig {
     /**
      * ActiveMQ queue name.
      */
-    private static final String JMS_QUEUE = "RED_EYES_CONFIRM";
+    public static final String JMS_QUEUE = "RED_EYES_CONFIRM";
+
+
+    /**
+     * ActiveMQ connection factory.
+     *
+     * @return ActiveMQ connection factory.
+     */
+    @Bean
+    public ActiveMQConnectionFactory connectionFactory() {
+        ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+        activeMQConnectionFactory.setTrustAllPackages(true);
+        return activeMQConnectionFactory;
+    }
+
+    /**
+     * SpringJms container factory.
+     *
+     * @return SpringJms container factory.
+     */
+    @Bean
+    public JmsListenerContainerFactory<?> factory() {
+        SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory());
+        return factory;
+    }
 
     /**
      * JMS Template.
@@ -24,9 +52,9 @@ public class JmsConfig {
      * @return JMS Template.
      */
     @Bean
-    public final JmsTemplate jmsTemplate() {
+    public JmsTemplate jmsTemplate() {
         JmsTemplate jmsTemplate = new JmsTemplate();
-        jmsTemplate.setConnectionFactory(new ActiveMQConnectionFactory("tcp://localhost:61616"));
+        jmsTemplate.setConnectionFactory(connectionFactory());
         jmsTemplate.setDefaultDestination(new ActiveMQQueue(JMS_QUEUE));
         return jmsTemplate;
     }
@@ -37,21 +65,9 @@ public class JmsConfig {
      * @return Custom jms sender.
      */
     @Bean
-    public final JmsEmailProduser emailProduser() {
+    public JmsEmailProduser jmsEmailProduser() {
         JmsEmailProduser jmsEmailProduser = new JmsEmailProduser();
         jmsEmailProduser.setJmsTemplate(jmsTemplate());
         return jmsEmailProduser;
-    }
-
-    /**
-     * Custom jms receive message.
-     *
-     * @return Custom jms receiver.
-     */
-    @Bean
-    public final JmsEmailConsumer emailConsumer() {
-        JmsEmailConsumer jmsEmailConsumer = new JmsEmailConsumer();
-        jmsEmailConsumer.setJmsTemplate(jmsTemplate());
-        return jmsEmailConsumer;
     }
 }
