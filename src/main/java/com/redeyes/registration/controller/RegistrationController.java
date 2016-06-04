@@ -1,21 +1,26 @@
 package com.redeyes.registration.controller;
 
-import javax.validation.Valid;
-
+import com.redeyes.registration.model.User;
+import com.redeyes.registration.model.UserTo;
+import com.redeyes.registration.service.MessageService;
+import com.redeyes.registration.service.UserService;
+import com.redeyes.registration.util.UserValidationResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.redeyes.registration.model.User;
-import com.redeyes.registration.model.UserValidationResult;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
+import static com.redeyes.registration.controller.RegistrationController.REGISTRATION_URI;
 
 
 /**
@@ -25,8 +30,21 @@ import com.redeyes.registration.model.UserValidationResult;
  * @author Oleksandr Dres
  */
 @Controller
-@RequestMapping("/registration")
+@RequestMapping(REGISTRATION_URI)
 public class RegistrationController {
+    public static final String REGISTRATION_URI = "/registration";
+
+    /**
+     * User service.
+     */
+    @Autowired
+    private UserService service;
+
+    /**
+     * Message service.
+     */
+    @Autowired
+    private MessageService messageService;
     /**
      * Logger for photo controller.
      */
@@ -44,35 +62,25 @@ public class RegistrationController {
     }
 
     /**
-     *
-     * @param bindingResult
-     *        model
-     *
-     * @param user
-     *        user registration data
-     *
+     * @param bindingResult model
+     * @param userTo        user registration data
      * @return ajax
      */
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public final UserValidationResult post(@ModelAttribute @Valid final User user,
-            final BindingResult bindingResult) {
-        LOG.info("email: '{}', password: '{}'", user.getEmail(), user.getPassword());
+    public final UserValidationResult post(@Valid final UserTo userTo,
+                                           final BindingResult bindingResult, final HttpServletRequest request) {
+        User user = userTo.asUser();
+        service.saveUser(user);
+        messageService.sendConfirmToUser(user, request);
         return new UserValidationResult(bindingResult);
     }
 
-    /**
-     *
-     * @param hash
-     *        a hash to verify
-     *
-     * @return view
-     */
-    @RequestMapping(value = "/confirm/{hash:[A-Za-z0-9]+}", method = RequestMethod.GET)
-    public final ModelAndView confirm(@PathVariable final String hash) {
-        ModelAndView model = getModelAndView();
-        model.addObject("data", hash);
-        return model;
+    @ExceptionHandler(DataAccessException.class)
+    @ResponseBody
+    public final UserValidationResult uniqueEmail(final DataAccessException e) {
+        LOG.error("Repository error: {}", e.getMessage());
+        return new UserValidationResult("User with this email is registered.");
     }
 
     /**

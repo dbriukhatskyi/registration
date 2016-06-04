@@ -6,29 +6,39 @@ import org.springframework.validation.BindingResult;
  * A class to represent response to {@code User} fields validation.
  *
  * @author Dmytro Briukhatskyi
- *
  */
 public class UserValidationResult {
 
-    /** Validation success. */
+    /**
+     * Validation success.
+     */
     private boolean success;
 
-    /** Invalid email field. */
+    /**
+     * Invalid email field.
+     */
     private boolean invalidEmail;
 
-    /** Invalid password field. */
+    /**
+     * Invalid password field.
+     */
     private boolean invalidPassword;
 
-    /** Error message to display in the UI. */
+    /**
+     * Error message to display in the UI.
+     */
     private String message;
+
+    public UserValidationResult(String errorMessage) {
+        success = false;
+        message = errorMessage;
+    }
 
     /**
      * Creates a new instance and initializes it with the information extracted from
      * the provided {@code BindingResult} instance.
      *
-     * @param bindingResult
-     *        validation result
-     *
+     * @param bindingResult validation result
      */
     public UserValidationResult(final BindingResult bindingResult) {
         success = !bindingResult.hasFieldErrors();

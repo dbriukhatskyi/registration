@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.StringWriter;
+
+import static com.redeyes.registration.controller.ConfirmController.CONFIRM_URI;
 
 /**
  * Create email message.
@@ -31,14 +34,15 @@ public final class EmailConstructor {
     /**
      * Create email message for user.
      *
-     * @param user User.
+     * @param user    User.
+     * @param request
      * @return Email message.
      */
-    public Email createForUser(final User user) {
+    public Email createForUser(final User user, HttpServletRequest request) {
         Email email = new Email();
         email.setRecipient(user.getEmail());
         email.setSubject("Confirm your email!");
-        email.setEmailText(getEmailText(user));
+        email.setEmailText(getEmailText(user, request));
         return email;
     }
 
@@ -59,26 +63,31 @@ public final class EmailConstructor {
     /**
      * Returned confirm link.
      *
-     * @param user User for confirm.
+     * @param user    User for confirm.
+     * @param request
      * @return Confirmation link.
      */
-    private String getConfirmLink(final User user) {
-        return "http://localhost:8080/confirm/"
+    private String getConfirmLink(final User user, HttpServletRequest request) {
+        String URI = request.getRequestURI();
+        StringBuffer URL = request.getRequestURL();
+        String url = URL.substring(0, URL.lastIndexOf(URI));
+        return url + CONFIRM_URI + "/"
                 + Base64Utils.encodeToString((user.getEmail() + ":" + user.getPassword()).getBytes());
     }
 
     /**
      * Creating email text.
      *
-     * @param user User to create email text.
+     * @param user    User to create email text.
+     * @param request
      * @return Email text.
      */
-    private String getEmailText(final User user) {
+    private String getEmailText(final User user, HttpServletRequest request) {
         Template template = velocityEngine.getTemplate("email.vm");
         VelocityContext context = new VelocityContext();
         context.put("email", user.getEmail());
         context.put("pass", getStarPass(user));
-        context.put("link", getConfirmLink(user));
+        context.put("link", getConfirmLink(user, request));
 
         StringWriter writer = new StringWriter();
         template.merge(context, writer);

@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Message service implementation.
  */
@@ -30,8 +32,8 @@ public class MessageServiceImpl implements MessageService {
     private JmsEmailProduser emailProduser;
 
     @Override
-    public final void sendConfirmToUser(final User user) {
+    public final void sendConfirmToUser(final User user, HttpServletRequest request) {
         LOG.info("Send email to activeMQ.");
-        emailProduser.sendEmail(constructor.createForUser(user));
+        emailProduser.sendEmail(constructor.createForUser(user,request));
     }
 }
