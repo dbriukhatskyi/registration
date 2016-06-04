@@ -1,61 +1,106 @@
 package com.redeyes.registration.model;
 
-import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.Email;
-
 /**
- *
- * @author Dmytro Briukhatskyi
- *
+ * User model.
  */
 public class User {
-    /** User's e-mail address. */
-    @Email
+
+    /**
+     * User email.
+     */
     private String email;
 
-    /** User's password. */
-    @Size(min = 1, max = 2)
+    /**
+     * User password.
+     */
     private String password;
 
     /**
-     * @return the email
+     * User confirmed.
+     */
+    private boolean isConfirmed = false;
+
+    /**
+     * Non-parameter constructor.
+     */
+    public User() {
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param mail User email.
+     * @param pass User password.
+     */
+    public User(final String mail, final String pass) {
+        this.email = mail;
+        this.password = pass;
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param mail      User email.
+     * @param pass      User password.
+     * @param confirmed User confirmed.
+     */
+    public User(final String mail, final String pass, final boolean confirmed) {
+        this.email = mail;
+        this.password = pass;
+        this.isConfirmed = confirmed;
+    }
+
+    /**
+     * User confirmed.
+     *
+     * @return User confirmed.
+     */
+    public final boolean isConfirmed() {
+        return isConfirmed;
+    }
+
+    /**
+     * User email.
+     *
+     * @return User confirmed.
      */
     public final String getEmail() {
         return email;
     }
 
     /**
-     * @param eml the email to set
+     * Set user email.
+     *
+     * @param mail User email.
      */
-    public final void setEmail(final String eml) {
-        this.email = eml;
+    public final void setEmail(final String mail) {
+        this.email = mail;
     }
 
     /**
-     * @return the password
+     * User password.
+     *
+     * @return User password.
      */
     public final String getPassword() {
         return password;
     }
 
     /**
-     * @param pwd the password to set
+     * Set user password.
+     *
+     * @param pass User password.
      */
-    public final void setPassword(final String pwd) {
-        this.password = pwd;
+    public final void setPassword(final String pass) {
+        this.password = pass;
     }
 
-    /**
-     *
-     */
     @Override
     public final String toString() {
-        return "{ "
-                + "'email': '"
-                + email
-                + "', 'password': '"
-                + password
-                + "' }";
+        return "User{"
+                + "email='" + email + '\''
+                + ", password='" + password + '\''
+                + ", isConfirmed=" + isConfirmed
+                + '}';
     }
 }

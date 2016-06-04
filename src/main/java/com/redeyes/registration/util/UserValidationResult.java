@@ -1,4 +1,4 @@
-package com.redeyes.registration.model;
+package com.redeyes.registration.util;
 
 import org.springframework.validation.BindingResult;
 
