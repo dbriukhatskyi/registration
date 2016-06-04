@@ -1,4 +1,4 @@
-package com.redeyes.registration.web;
+package com.redeyes.registration.controller;
 
 import com.redeyes.registration.service.UserService;
 import org.slf4j.Logger;
@@ -12,19 +12,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class RegistrationController {
-    private static final Logger LOG = LoggerFactory.getLogger(RegistrationController.class);
+public class ConfirmController {
+    public static final String CONFIRM_URI = "/confirm";
+    private static final Logger LOG = LoggerFactory.getLogger(ConfirmController.class);
 
     @Autowired
     private UserService service;
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public ModelAndView home() {
-        LOG.info("Return main view.");
-        return new ModelAndView("registration");
-    }
-
-    @RequestMapping(value = "/confirm/{code:.*}", method = RequestMethod.GET)
+    @RequestMapping(value = CONFIRM_URI + "/{code:.*}", method = RequestMethod.GET)
     public String success(@PathVariable String code) {
         String[] params = new String(Base64Utils.decodeFromString(code)).split(":");
         service.confirm(params[0]);

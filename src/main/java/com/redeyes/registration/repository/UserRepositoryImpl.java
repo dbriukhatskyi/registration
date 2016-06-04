@@ -4,6 +4,7 @@ import com.redeyes.registration.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -58,15 +59,11 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public final void confirm(final String email) {
         LOG.info("Confirm user");
-        if (getByEmail(email) != null) {
-            MapSqlParameterSource map = new MapSqlParameterSource()
-                    .addValue("is_confirmed", true)
-                    .addValue("email", email);
-            namedParameterJdbcTemplate.update(
-                    "UPDATE users SET is_confirmed=:is_confirmed WHERE email=:email", map);
-            LOG.info("User confirmed.");
-        } else {
-            LOG.info("User is not confirm.");
-        }
+        MapSqlParameterSource map = new MapSqlParameterSource()
+                .addValue("is_confirmed", true)
+                .addValue("email", email);
+        namedParameterJdbcTemplate.update(
+                "UPDATE users SET is_confirmed=:is_confirmed WHERE email=:email", map);
+        LOG.info("User confirmed.");
     }
 }
