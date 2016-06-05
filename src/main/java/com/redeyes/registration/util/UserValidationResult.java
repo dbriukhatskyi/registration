@@ -1,21 +1,23 @@
 package com.redeyes.registration.util;
 
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 
 /**
  * A class to represent response to {@code User} fields validation.
  *
  * @author Dmytro Briukhatskyi
+ * @author Oleksandr Dres
  */
 public class UserValidationResult {
 
     /**
-     * Validation success.
+     * Indicates a successful validation result.
      */
     private boolean success;
 
     /**
-     * Invalid email field.
+     * Invalid e-mail field.
      */
     private boolean invalidEmail;
 
@@ -25,11 +27,27 @@ public class UserValidationResult {
     private boolean invalidPassword;
 
     /**
-     * Error message to display in the UI.
+     * Not field-specific error message to display in the UI.
      */
     private String message;
 
-    public UserValidationResult(String errorMessage) {
+    /**
+     * An error message for e-mail field.
+     */
+    private String emailMessage;
+
+    /**
+     * An error message for password field.
+     */
+    private String passwordMessage;
+
+    /**
+     * Constructs a validation result from the given error message
+     * with no specific field errors.
+     *
+     * @param errorMessage a message to set
+     */
+    public UserValidationResult(final String errorMessage) {
         success = false;
         message = errorMessage;
     }
@@ -45,18 +63,24 @@ public class UserValidationResult {
         invalidEmail = bindingResult.hasFieldErrors("email");
         invalidPassword = bindingResult.hasFieldErrors("password");
 
-        StringBuilder messageBuilder = new StringBuilder();
+        StringBuilder emailMessageBuilder = new StringBuilder();
+        StringBuilder passwordMessageBuilder = new StringBuilder();
 
         if (invalidEmail) {
-            messageBuilder.append("Please, provide a valid e-mail address!\n");
+            for (ObjectError error : bindingResult.getFieldErrors("email")) {
+                emailMessageBuilder.append(error.getDefaultMessage() + "\n");
+            }
         }
+
+        emailMessage = emailMessageBuilder.toString();
 
         if (invalidPassword) {
-            messageBuilder.append("Password should contain at least two numbers "
-                    + "and one exclamation mark!");
+            for (ObjectError error : bindingResult.getFieldErrors("password")) {
+                passwordMessageBuilder.append(error.getDefaultMessage() + "\n");
+            }
         }
 
-        message = messageBuilder.toString();
+        passwordMessage = passwordMessageBuilder.toString();
     }
 
     /**
@@ -67,24 +91,52 @@ public class UserValidationResult {
     }
 
     /**
-     * @return the invalidEmail
+     * @return the invalidEmail flag
      */
     public final boolean isInvalidEmail() {
         return invalidEmail;
     }
 
     /**
-     * @return the invalidPassword
+     * @return the invalidPassword flag
      */
     public final boolean isInvalidPassword() {
         return invalidPassword;
     }
 
     /**
-     * @return current message
+     * @return current non-field-specific message
      */
     public final String getMessage() {
         return message;
+    }
+
+    /**
+     * @return the email field error message
+     */
+    public final String getEmailMessage() {
+        return emailMessage;
+    }
+
+    /**
+     * @param emailMessage a new email field error message to set
+     */
+    public final void setEmailMessage(final String emailMessage) {
+        this.emailMessage = emailMessage;
+    }
+
+    /**
+     * @return the password field error message
+     */
+    public final String getPasswordMessage() {
+        return passwordMessage;
+    }
+
+    /**
+     * @param newPasswordMessage a new password field error message to set
+     */
+    public final void setPasswordMessage(final String newPasswordMessage) {
+        this.passwordMessage = newPasswordMessage;
     }
 
 }
