@@ -1,6 +1,5 @@
 package com.redeyes.registration.config;
 
-import com.redeyes.registration.config.jms.JmsEmailProduser;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
+
+import com.redeyes.registration.config.jms.JmsEmailProducer;
 
 /**
  * JMS Configuration.
@@ -26,7 +27,8 @@ public class JmsConfig {
      */
     @Bean
     public ActiveMQConnectionFactory connectionFactory() {
-        ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+        ActiveMQConnectionFactory activeMQConnectionFactory =
+                new ActiveMQConnectionFactory("vm://localhost?broker.persistent=false");
         activeMQConnectionFactory.setTrustAllPackages(true);
         return activeMQConnectionFactory;
     }
@@ -62,8 +64,8 @@ public class JmsConfig {
      * @return Custom jms sender.
      */
     @Bean
-    public JmsEmailProduser jmsEmailProduser() {
-        JmsEmailProduser jmsEmailProduser = new JmsEmailProduser();
+    public JmsEmailProducer jmsEmailProduser() {
+        JmsEmailProducer jmsEmailProduser = new JmsEmailProducer();
         jmsEmailProduser.setJmsTemplate(jmsTemplate());
         return jmsEmailProduser;
     }
