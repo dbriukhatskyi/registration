@@ -1,6 +1,6 @@
 package com.redeyes.registration.controller;
 
-import com.redeyes.registration.model.UserTo;
+import com.redeyes.registration.model.RegistrationForm;
 import org.junit.Test;
 
 import static com.redeyes.registration.controller.RegistrationController.REGISTRATION_URI;
@@ -19,9 +19,9 @@ public class RegistrationControllerTest extends AbstractControllerTest {
 
     @Test
     public void testPost() throws Exception {
-        UserTo userTo = new UserTo();
-        userTo.setEmail("user@gmail.com");
-        userTo.setPassword("12345");
+        RegistrationForm formData = new RegistrationForm();
+        formData.setEmail("user@gmail.com");
+        formData.setPassword("12345");
 
 //        mockMvc.perform(post(REGISTRATION_URI, userTo));
     }
