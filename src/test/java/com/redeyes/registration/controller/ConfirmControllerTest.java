@@ -1,19 +1,20 @@
 package com.redeyes.registration.controller;
 
-import com.redeyes.registration.model.User;
+import com.redeyes.registration.model.UserTo;
 import org.junit.Test;
 
 import static com.redeyes.registration.controller.ConfirmController.CONFIRM_URI;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class ConfirmControllerTest extends AbstractControllerTest {
 
     @Test
     public void testSuccess() throws Exception {
-        repository.save(new User("pupkin@gmail.com", "12345"));
+        UserTo userTo = new UserTo();
+        userTo.setEmail("pupkin@gmail.com");
+        userTo.setPassword("12345");
+        repository.save(userTo.asUser());
         mockMvc.perform(get(CONFIRM_URI + "/cHVwa2luQGdtYWlsLmNvbToxMjM0NQ=="))
                 .andExpect(redirectedUrl("/success"));
     }
