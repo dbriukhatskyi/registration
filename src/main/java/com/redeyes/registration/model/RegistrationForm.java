@@ -19,7 +19,13 @@ public class RegistrationForm {
     /**
      * User password.
      */
-    @Pattern(regexp = ".+", message = "Password should contain at least two numbers and one exclamation mark!")
+    @Pattern.List({
+            @Pattern(regexp = ".*!.*",
+                    message = "Password should contain at least two numbers and one exclamation mark!"),
+            @Pattern(regexp = ".*\\d.*\\d.*",
+                    message = "Password should contain at least two numbers and one exclamation mark!"
+            )
+    })
     private String password;
 
     /**
