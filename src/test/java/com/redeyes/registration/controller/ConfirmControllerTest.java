@@ -1,6 +1,6 @@
 package com.redeyes.registration.controller;
 
-import com.redeyes.registration.model.UserTo;
+import com.redeyes.registration.model.RegistrationForm;
 import org.junit.Test;
 
 import static com.redeyes.registration.controller.ConfirmController.CONFIRM_URI;
@@ -19,7 +19,7 @@ public class ConfirmControllerTest extends AbstractControllerTest {
      */
     @Test
     public void testSuccess() throws Exception {
-        UserTo userTo = new UserTo();
+        RegistrationForm userTo = new RegistrationForm();
         userTo.setEmail("pupkin@gmail.com");
         userTo.setPassword("12345");
         repository.save(userTo.asUser());

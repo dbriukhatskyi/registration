@@ -119,24 +119,9 @@ public class UserValidationResult {
     }
 
     /**
-     * @param emailMessage a new email field error message to set
-     */
-    public final void setEmailMessage(final String emailMessage) {
-        this.emailMessage = emailMessage;
-    }
-
-    /**
      * @return the password field error message
      */
     public final String getPasswordMessage() {
         return passwordMessage;
     }
-
-    /**
-     * @param newPasswordMessage a new password field error message to set
-     */
-    public final void setPasswordMessage(final String newPasswordMessage) {
-        this.passwordMessage = newPasswordMessage;
-    }
-
 }
