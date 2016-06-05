@@ -3,7 +3,6 @@ package com.redeyes.registration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 
 import java.util.Properties;
@@ -15,7 +14,6 @@ import java.util.Properties;
  * @author Dmytro Briukhatskyi
  */
 @SpringBootApplication
-@ComponentScan
 public class RegistrationApplication {
 
     /**
@@ -31,11 +29,11 @@ public class RegistrationApplication {
         velocityEngineFactoryBean.setVelocityProperties(props);
         return velocityEngineFactoryBean;
     }
+
     /**
      * An entry point for application.
      *
-     * @param args
-     *        command-line arguments
+     * @param args command-line arguments
      */
     public static void main(final String[] args) {
         SpringApplication.run(RegistrationApplication.class, args);

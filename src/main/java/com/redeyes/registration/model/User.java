@@ -1,5 +1,7 @@
 package com.redeyes.registration.model;
 
+import java.util.Objects;
+
 /**
  * User model.
  */
@@ -86,13 +88,19 @@ public class User {
         return password;
     }
 
-    /**
-     * Set user password.
-     *
-     * @param pass User password.
-     */
-    public final void setPassword(final String pass) {
-        this.password = pass;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return isConfirmed() == user.isConfirmed() &&
+                Objects.equals(getEmail(), user.getEmail()) &&
+                Objects.equals(getPassword(), user.getPassword());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getEmail(), getPassword(), isConfirmed());
     }
 
     @Override

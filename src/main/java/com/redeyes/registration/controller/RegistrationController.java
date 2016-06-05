@@ -20,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import static com.redeyes.registration.controller.RegistrationController.REGISTRATION_URI;
+
 /**
  * Registration service controller.
  *
@@ -27,8 +29,13 @@ import javax.validation.Valid;
  * @author Oleksandr Dres
  */
 @Controller
-@RequestMapping("/registration")
+@RequestMapping(REGISTRATION_URI)
 public class RegistrationController {
+
+    /**
+     * Registration URI.
+     */
+    public static final String REGISTRATION_URI = "/registration";
 
     /**
      * User service.
