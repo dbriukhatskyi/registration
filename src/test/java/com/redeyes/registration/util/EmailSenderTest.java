@@ -16,12 +16,22 @@ import javax.mail.SendFailedException;
 @WebAppConfiguration
 public class EmailSenderTest {
 
+    /**
+     * Test send email.
+     *
+     * @throws MessagingException MessagingException.
+     */
     @Test
     public void testSendConfirm() throws MessagingException {
         Email email = new Email("pupkin@gmail.com", "Confirm", "Confirm email!");
         EmailSender.sendConfirm(email);
     }
 
+    /**
+     * Test send wrong email.
+     *
+     * @throws MessagingException MessagingException.
+     */
     @Test(expected = SendFailedException.class)
     public void testSendConfirmError() throws MessagingException {
         Email email = new Email("pupkingmail.com", "Confirm", "Confirm email!");

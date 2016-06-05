@@ -11,8 +11,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @WebAppConfiguration
 public class RegistrationApplicationTests {
 
-	@Test
-	public void contextLoads() {
-	}
+    /**
+     * Test spring context load.
+     */
+    @Test
+    public void contextLoads() {
+        //NOP
+    }
 
 }

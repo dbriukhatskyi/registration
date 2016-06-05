@@ -12,33 +12,54 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * User repository tests.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = RegistrationApplication.class)
 @WebAppConfiguration
 public class UserRepositoryImplTest {
 
+    /**
+     * User repository.
+     */
     @Autowired
     private UserRepository repository;
 
+    /**
+     * User email.
+     */
     private static String email = "mike@gmail.com";
 
+    /**
+     * Test save user.
+     */
     @Test
     public void testSave() {
         User user = new User(email, "pass");
         repository.save(user);
     }
 
+    /**
+     * Test get user.
+     */
     @Test
     public void testGetByEmail() {
         User user = new User(email, "pass");
         assertEquals(user, repository.getByEmail(email));
     }
 
+    /**
+     * Test save duplicate user.
+     */
     @Test(expected = DuplicateKeyException.class)
     public void testSaveSameEmail() {
         repository.save(new User(email, "qwerty"));
     }
 
+    /**
+     * Test confirm user.
+     */
     @Test
     public void testConfirm() {
         String email = "tim@gmail.com";
