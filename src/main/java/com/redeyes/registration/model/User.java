@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * User model.
  */
-public class User {
+public final class User {
 
     /**
      * User email.
@@ -57,7 +57,7 @@ public class User {
      *
      * @return User confirmed.
      */
-    public final boolean isConfirmed() {
+    public boolean isConfirmed() {
         return isConfirmed;
     }
 
@@ -66,7 +66,7 @@ public class User {
      *
      * @return User confirmed.
      */
-    public final String getEmail() {
+    public String getEmail() {
         return email;
     }
 
@@ -75,16 +75,16 @@ public class User {
      *
      * @return User password.
      */
-    public final String getPassword() {
+    public String getPassword() {
         return password;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         User user = (User) o;
-        return isConfirmed() == user.isConfirmed() &&
-                Objects.equals(getEmail(), user.getEmail()) &&
-                Objects.equals(getPassword(), user.getPassword());
+        return isConfirmed() == user.isConfirmed()
+                && Objects.equals(getEmail(), user.getEmail())
+                && Objects.equals(getPassword(), user.getPassword());
     }
 
     @Override
@@ -93,7 +93,7 @@ public class User {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return "User{"
                 + "email='" + email + '\''
                 + ", password='" + password + '\''
