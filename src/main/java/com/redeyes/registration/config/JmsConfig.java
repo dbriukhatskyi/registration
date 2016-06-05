@@ -26,7 +26,8 @@ public class JmsConfig {
      */
     @Bean
     public ActiveMQConnectionFactory connectionFactory() {
-        ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+        ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory(
+                "vm://localhost?broker.persistent=false");
         activeMQConnectionFactory.setTrustAllPackages(true);
         return activeMQConnectionFactory;
     }
