@@ -1,29 +1,36 @@
 package com.redeyes.registration.util;
 
-import com.redeyes.registration.model.Email;
-import com.redeyes.registration.model.User;
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
+import static com.redeyes.registration.controller.ConfirmController.CONFIRM_URI;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring4.SpringTemplateEngine;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.StringWriter;
-
-import static com.redeyes.registration.controller.ConfirmController.CONFIRM_URI;
+import com.redeyes.registration.model.Email;
+import com.redeyes.registration.model.User;
 
 /**
  * Create email message.
  */
 @Component
-public final class EmailConstructor {
-
+public final class EmailBuilder {
     /**
-     * Non.. constructor.
+     * A default constructor.
      */
-    public EmailConstructor() {
+    public EmailBuilder() {
+    }
+
+    @Autowired
+    private SpringTemplateEngine thymeleaf;
+
+    @Autowired
+    public EmailBuilder(final SpringTemplateEngine thymeleaf) {
+        this.thymeleaf = thymeleaf;
     }
 
     /**
@@ -36,10 +43,10 @@ public final class EmailConstructor {
      * Create email message for user.
      *
      * @param user    User.
-     * @param request Servlet request.
+     * @param request
      * @return Email message.
      */
-    public Email createForUser(final User user, final HttpServletRequest request) {
+    public Email createForUser(final User user, HttpServletRequest request) {
         Email email = new Email();
         email.setRecipient(user.getEmail());
         email.setSubject("Confirm your email!");
@@ -65,13 +72,13 @@ public final class EmailConstructor {
      * Returned confirm link.
      *
      * @param user    User for confirm.
-     * @param request Servlet request.
+     * @param request
      * @return Confirmation link.
      */
-    private String getConfirmLink(final User user, final HttpServletRequest request) {
-        String appURI = request.getRequestURI();
-        StringBuffer appURL = request.getRequestURL();
-        String url = appURL.substring(0, appURL.lastIndexOf(appURI));
+    private String getConfirmationLink(final User user, HttpServletRequest request) {
+        String URI = request.getRequestURI();
+        StringBuffer URL = request.getRequestURL();
+        String url = URL.substring(0, URL.lastIndexOf(URI));
         return url + CONFIRM_URI + "/"
                 + Base64Utils.encodeToString((user.getEmail() + ":" + user.getPassword()).getBytes());
     }
@@ -80,18 +87,16 @@ public final class EmailConstructor {
      * Creating email text.
      *
      * @param user    User to create email text.
-     * @param request Servlet request.
+     * @param request
      * @return Email text.
      */
-    private String getEmailText(final User user, final HttpServletRequest request) {
-        Template template = velocityEngine.getTemplate("email.vm");
-        VelocityContext context = new VelocityContext();
-        context.put("email", user.getEmail());
-        context.put("pass", getStarPass(user));
-        context.put("link", getConfirmLink(user, request));
+    private String getEmailText(final User user, HttpServletRequest request) {
+        Context ctx = new Context();
+        ctx.setVariable("email", user.getEmail());
+        ctx.setVariable("pass", getStarPass(user));
+        ctx.setVariable("link", getConfirmationLink(user, request));
+        String emailText = thymeleaf.process("email.html", ctx);
 
-        StringWriter writer = new StringWriter();
-        template.merge(context, writer);
-        return writer.toString();
+        return emailText;
     }
 }
