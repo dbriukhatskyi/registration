@@ -2,14 +2,16 @@ package com.redeyes.registration.util;
 
 import static com.redeyes.registration.controller.ConfirmController.CONFIRM_URI;
 
+import java.io.StringWriter;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring4.SpringTemplateEngine;
 
 import com.redeyes.registration.model.Email;
 import com.redeyes.registration.model.User;
@@ -23,14 +25,6 @@ public final class EmailBuilder {
      * A default constructor.
      */
     public EmailBuilder() {
-    }
-
-    @Autowired
-    private SpringTemplateEngine thymeleaf;
-
-    @Autowired
-    public EmailBuilder(final SpringTemplateEngine thymeleaf) {
-        this.thymeleaf = thymeleaf;
     }
 
     /**
@@ -91,12 +85,14 @@ public final class EmailBuilder {
      * @return Email text.
      */
     private String getEmailText(final User user, HttpServletRequest request) {
-        Context ctx = new Context();
-        ctx.setVariable("email", user.getEmail());
-        ctx.setVariable("pass", getStarPass(user));
-        ctx.setVariable("link", getConfirmationLink(user, request));
-        String emailText = thymeleaf.process("email.html", ctx);
+        Template template = velocityEngine.getTemplate("email.vm");
+        VelocityContext context = new VelocityContext();
+        context.put("email", user.getEmail());
+        context.put("pass", getStarPass(user));
+        context.put("link", getConfirmationLink(user, request));
 
-        return emailText;
+        StringWriter writer = new StringWriter();
+        template.merge(context, writer);
+        return writer.toString();
     }
 }
