@@ -6,7 +6,7 @@ import org.springframework.jms.core.support.JmsGatewaySupport;
 /**
  * Custom jms message sender.
  */
-public class JmsEmailProduser extends JmsGatewaySupport {
+public class JmsEmailProducer extends JmsGatewaySupport {
     /**
      * Send email to activeMQ.
      *

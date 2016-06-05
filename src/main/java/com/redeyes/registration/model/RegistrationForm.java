@@ -1,23 +1,31 @@
 package com.redeyes.registration.model;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * User transfer object.
  */
-public class UserTo {
+public class RegistrationForm {
     /**
      * User email.
      */
+    @NotBlank(message = "E-mail address should not be blank!")
+    @Email(message = "Please provide a valid e-mail address!")
     private String email;
 
     /**
      * User password.
      */
+    @Pattern(regexp = ".+", message = "Password should contain at least two numbers and one exclamation mark!")
     private String password;
 
     /**
      * Non-parameter constructor.
      */
-    public UserTo() {
+    public RegistrationForm() {
     }
 
     /**
@@ -32,10 +40,10 @@ public class UserTo {
     /**
      * Set user email.
      *
-     * @param mail User email.
+     * @param newEmail User email.
      */
-    public final void setEmail(final String mail) {
-        this.email = mail;
+    public final void setEmail(final String newEmail) {
+        this.email = newEmail;
     }
 
     /**
@@ -50,10 +58,10 @@ public class UserTo {
     /**
      * Set user password.
      *
-     * @param pass User password.
+     * @param newPassword User password.
      */
-    public final void setPassword(final String pass) {
-        this.password = pass;
+    public final void setPassword(final String newPassword) {
+        this.password = newPassword;
     }
 
     /**
