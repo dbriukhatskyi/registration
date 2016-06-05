@@ -71,15 +71,6 @@ public class User {
     }
 
     /**
-     * Set user email.
-     *
-     * @param mail User email.
-     */
-    public final void setEmail(final String mail) {
-        this.email = mail;
-    }
-
-    /**
      * User password.
      *
      * @return User password.
@@ -90,8 +81,6 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
         User user = (User) o;
         return isConfirmed() == user.isConfirmed() &&
                 Objects.equals(getEmail(), user.getEmail()) &&

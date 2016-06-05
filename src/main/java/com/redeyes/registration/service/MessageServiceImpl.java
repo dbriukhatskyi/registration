@@ -33,7 +33,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public final void sendConfirmToUser(final User user, final HttpServletRequest request) {
-        LOG.info("Send email to activeMQ.");
+        LOG.info("Send email to JMS broker.");
         emailProduser.sendEmail(constructor.createForUser(user, request));
     }
 }

@@ -75,6 +75,9 @@ public class RegistrationController {
     @ResponseBody
     public final UserValidationResult post(@Valid final UserTo userTo,
                                            final BindingResult bindingResult, final HttpServletRequest request) {
+        if (bindingResult.hasErrors()) {
+            return new UserValidationResult(bindingResult);
+        }
         User user = userTo.asUser();
         service.saveUser(user);
         messageService.sendConfirmToUser(user, request);

@@ -1,5 +1,8 @@
 package com.redeyes.registration.model;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  * User transfer object.
  */
@@ -7,11 +10,13 @@ public class UserTo {
     /**
      * User email.
      */
+    @Email
     private String email;
 
     /**
      * User password.
      */
+    @NotEmpty
     private String password;
 
     /**
@@ -21,30 +26,12 @@ public class UserTo {
     }
 
     /**
-     * User email.
-     *
-     * @return User email.
-     */
-    public final String getEmail() {
-        return email;
-    }
-
-    /**
      * Set user email.
      *
      * @param mail User email.
      */
     public final void setEmail(final String mail) {
         this.email = mail;
-    }
-
-    /**
-     * User password.
-     *
-     * @return User password.
-     */
-    public final String getPassword() {
-        return password;
     }
 
     /**
