@@ -1,0 +1,9 @@
+<html>
+<body>
+<h1 style="text-align: center">Thank you for registration.</h1><br>
+<p style="text-align: center">You have succesfully created account on our site.<br>
+    You email is ${email} and you pass ends on ${pass}</p><br>
+<p style="text-align: center">To confirm your account please click on this link<br>
+    ${link}</p>
+</body>
+</html>
