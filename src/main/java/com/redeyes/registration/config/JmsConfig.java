@@ -15,9 +15,9 @@ import org.springframework.jms.core.JmsTemplate;
 @Configuration
 public class JmsConfig {
     /**
-     * ActiveMQ queue name.
+     * ActiveMQ email confirm queue name.
      */
-    public static final String JMS_QUEUE = "RED_EYES_CONFIRM";
+    public static final String EMAIL_QUEUE_NAME = "confirm.email";
 
     /**
      * ActiveMQ connection factory.
@@ -53,7 +53,7 @@ public class JmsConfig {
     public JmsTemplate jmsTemplate() {
         JmsTemplate jmsTemplate = new JmsTemplate();
         jmsTemplate.setConnectionFactory(connectionFactory());
-        jmsTemplate.setDefaultDestination(new ActiveMQQueue(JMS_QUEUE));
+        jmsTemplate.setDefaultDestination(new ActiveMQQueue(EMAIL_QUEUE_NAME));
         return jmsTemplate;
     }
 

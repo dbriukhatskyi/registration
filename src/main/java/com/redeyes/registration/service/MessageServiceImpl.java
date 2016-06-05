@@ -32,8 +32,8 @@ public class MessageServiceImpl implements MessageService {
     private JmsEmailProduser emailProduser;
 
     @Override
-    public final void sendConfirmToUser(final User user, HttpServletRequest request) {
+    public final void sendConfirmToUser(final User user, final HttpServletRequest request) {
         LOG.info("Send email to activeMQ.");
-        emailProduser.sendEmail(constructor.createForUser(user,request));
+        emailProduser.sendEmail(constructor.createForUser(user, request));
     }
 }

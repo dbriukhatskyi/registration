@@ -8,7 +8,7 @@ import org.springframework.jms.core.support.JmsGatewaySupport;
  */
 public class JmsEmailProduser extends JmsGatewaySupport {
     /**
-     * Send email to activeMQ.
+     * Send email to JMS broker.
      *
      * @param email Email to send.
      */

@@ -29,7 +29,10 @@ public class UserValidationResult {
      */
     private String message;
 
-    public UserValidationResult(String errorMessage) {
+    /**
+     * @param errorMessage Error message.
+     */
+    public UserValidationResult(final String errorMessage) {
         success = false;
         message = errorMessage;
     }

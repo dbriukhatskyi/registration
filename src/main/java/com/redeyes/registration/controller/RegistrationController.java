@@ -20,9 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import static com.redeyes.registration.controller.RegistrationController.REGISTRATION_URI;
-
-
 /**
  * Registration service controller.
  *
@@ -30,9 +27,8 @@ import static com.redeyes.registration.controller.RegistrationController.REGISTR
  * @author Oleksandr Dres
  */
 @Controller
-@RequestMapping(REGISTRATION_URI)
+@RequestMapping("/registration")
 public class RegistrationController {
-    public static final String REGISTRATION_URI = "/registration";
 
     /**
      * User service.
@@ -45,6 +41,7 @@ public class RegistrationController {
      */
     @Autowired
     private MessageService messageService;
+
     /**
      * Logger for photo controller.
      */
@@ -62,9 +59,10 @@ public class RegistrationController {
     }
 
     /**
-     * @param bindingResult model
-     * @param userTo        user registration data
-     * @return ajax
+     * @param userTo        Registration user data.
+     * @param bindingResult Result.
+     * @param request       Servlet request.
+     * @return Validation result.
      */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
@@ -76,6 +74,10 @@ public class RegistrationController {
         return new UserValidationResult(bindingResult);
     }
 
+    /**
+     * @param e DataAccessException.
+     * @return Validation result.
+     */
     @ExceptionHandler(DataAccessException.class)
     @ResponseBody
     public final UserValidationResult uniqueEmail(final DataAccessException e) {

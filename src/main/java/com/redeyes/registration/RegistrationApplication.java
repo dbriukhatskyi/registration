@@ -18,12 +18,16 @@ import java.util.Properties;
 @ComponentScan
 public class RegistrationApplication {
 
+    /**
+     * @return Velocity Engine.
+     */
     @Bean
     public VelocityEngineFactoryBean velocityEngine() {
         VelocityEngineFactoryBean velocityEngineFactoryBean = new VelocityEngineFactoryBean();
         Properties props = new Properties();
         props.setProperty("resource.loader", "class");
-        props.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+        props.setProperty("class.resource.loader.class",
+                "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         velocityEngineFactoryBean.setVelocityProperties(props);
         return velocityEngineFactoryBean;
     }
