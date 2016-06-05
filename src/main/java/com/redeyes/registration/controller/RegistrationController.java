@@ -1,7 +1,7 @@
 package com.redeyes.registration.controller;
 
 import com.redeyes.registration.model.User;
-import com.redeyes.registration.model.UserTo;
+import com.redeyes.registration.model.RegistrationForm;
 import com.redeyes.registration.service.MessageService;
 import com.redeyes.registration.service.UserService;
 import com.redeyes.registration.util.UserValidationResult;
@@ -31,9 +31,8 @@ import static com.redeyes.registration.controller.RegistrationController.REGISTR
 @Controller
 @RequestMapping(REGISTRATION_URI)
 public class RegistrationController {
-
     /**
-     * Registration URI.
+     * The mapping URI.
      */
     public static final String REGISTRATION_URI = "/registration";
 
@@ -66,27 +65,37 @@ public class RegistrationController {
     }
 
     /**
-     * @param userTo        Registration user data.
-     * @param bindingResult Result.
-     * @param request       Servlet request.
-     * @return Validation result.
+     * @param bindingResult
+     *        registration form validation result
+     *
+     * @param formData
+     *        user registration data
+     *
+     * @param request
+     *        servlet request
+     *
+     * @return ajax
      */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public final UserValidationResult post(@Valid final UserTo userTo,
-                                           final BindingResult bindingResult, final HttpServletRequest request) {
-        if (bindingResult.hasErrors()) {
-            return new UserValidationResult(bindingResult);
+    public final UserValidationResult post(@Valid final RegistrationForm formData,
+            final BindingResult bindingResult, final HttpServletRequest request) {
+        if (!bindingResult.hasErrors()) {
+            User user = formData.asUser();
+            service.saveUser(user);
+            messageService.sendConfirmToUser(user, request);
         }
-        User user = userTo.asUser();
-        service.saveUser(user);
-        messageService.sendConfirmToUser(user, request);
+
         return new UserValidationResult(bindingResult);
     }
 
     /**
-     * @param e DataAccessException.
-     * @return Validation result.
+     * Handles a DataAccessException thrown by a repository.
+     *
+     * @param e
+     *        exception to handle
+     *
+     * @return validation result
      */
     @ExceptionHandler(DataAccessException.class)
     @ResponseBody

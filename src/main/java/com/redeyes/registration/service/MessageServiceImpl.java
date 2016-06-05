@@ -1,8 +1,8 @@
 package com.redeyes.registration.service;
 
-import com.redeyes.registration.config.jms.JmsEmailProduser;
+import com.redeyes.registration.config.jms.JmsEmailProducer;
 import com.redeyes.registration.model.User;
-import com.redeyes.registration.util.EmailConstructor;
+import com.redeyes.registration.util.EmailBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +24,12 @@ public class MessageServiceImpl implements MessageService {
      * Email constructor.
      */
     @Autowired
-    private EmailConstructor constructor;
+    private EmailBuilder constructor;
     /**
      * Custom message sender.
      */
     @Autowired
-    private JmsEmailProduser emailProduser;
+    private JmsEmailProducer emailProduser;
 
     @Override
     public final void sendConfirmToUser(final User user, final HttpServletRequest request) {

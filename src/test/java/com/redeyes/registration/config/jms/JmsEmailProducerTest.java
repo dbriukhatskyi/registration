@@ -15,13 +15,13 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = RegistrationApplication.class)
 @WebAppConfiguration
-public class JmsEmailProduserTest {
+public class JmsEmailProducerTest {
 
     /**
      * Custom email produser.
      */
     @Autowired
-    private JmsEmailProduser emailProduser;
+    private JmsEmailProducer emailProduсer;
 
     /**
      * Send email.
@@ -29,7 +29,7 @@ public class JmsEmailProduserTest {
     @Test
     public void testSendEmail() {
         Email email = new Email("pupkin@gmail.com", "Confirm!", "Confirm email.");
-        emailProduser.sendEmail(email);
+        emailProduсer.sendEmail(email);
     }
 
     /**
@@ -38,6 +38,6 @@ public class JmsEmailProduserTest {
     @Test
     public void testSendEmailError() {
         Email email = new Email("pupkingmail.com", "Confirm!", "Confirm email.");
-        emailProduser.sendEmail(email);
+        emailProduсer.sendEmail(email);
     }
 }

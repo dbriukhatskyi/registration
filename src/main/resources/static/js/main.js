@@ -10,7 +10,7 @@ $(document).ready(function () {
     form.on("submit", function (e) {
         e.preventDefault();
 
-        if (form.is(".loading, .success")) {
+        if (form.is(".loading")) {
             return false;
         }
 
@@ -26,7 +26,7 @@ $(document).ready(function () {
                     $("body").load("sent.html", function () {
                         $('<audio autoplay="autoplay" style="display:none;">'
                             + '<source src="sound/ding.mp3" />'
-                            + '<embed src="sound/ding.mp3.mp3" hidden="true" autostart="true"'
+                            + '<embed src="sound/ding.mp3" hidden="true" autostart="true"'
                             + 'loop="false" class="playSound" />'
                             + '</audio>').appendTo('body');
                     });
