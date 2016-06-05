@@ -19,6 +19,7 @@ import static com.redeyes.registration.controller.ConfirmController.CONFIRM_URI;
  */
 @Component
 public final class EmailConstructor {
+
     /**
      * Non.. constructor.
      */
@@ -35,10 +36,10 @@ public final class EmailConstructor {
      * Create email message for user.
      *
      * @param user    User.
-     * @param request
+     * @param request Servlet request.
      * @return Email message.
      */
-    public Email createForUser(final User user, HttpServletRequest request) {
+    public Email createForUser(final User user, final HttpServletRequest request) {
         Email email = new Email();
         email.setRecipient(user.getEmail());
         email.setSubject("Confirm your email!");
@@ -64,13 +65,13 @@ public final class EmailConstructor {
      * Returned confirm link.
      *
      * @param user    User for confirm.
-     * @param request
+     * @param request Servlet request.
      * @return Confirmation link.
      */
-    private String getConfirmLink(final User user, HttpServletRequest request) {
-        String URI = request.getRequestURI();
-        StringBuffer URL = request.getRequestURL();
-        String url = URL.substring(0, URL.lastIndexOf(URI));
+    private String getConfirmLink(final User user, final HttpServletRequest request) {
+        String appURI = request.getRequestURI();
+        StringBuffer appURL = request.getRequestURL();
+        String url = appURL.substring(0, appURL.lastIndexOf(appURI));
         return url + CONFIRM_URI + "/"
                 + Base64Utils.encodeToString((user.getEmail() + ":" + user.getPassword()).getBytes());
     }
@@ -79,10 +80,10 @@ public final class EmailConstructor {
      * Creating email text.
      *
      * @param user    User to create email text.
-     * @param request
+     * @param request Servlet request.
      * @return Email text.
      */
-    private String getEmailText(final User user, HttpServletRequest request) {
+    private String getEmailText(final User user, final HttpServletRequest request) {
         Template template = velocityEngine.getTemplate("email.vm");
         VelocityContext context = new VelocityContext();
         context.put("email", user.getEmail());

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
 
-import static com.redeyes.registration.config.JmsConfig.JMS_QUEUE;
+import static com.redeyes.registration.config.JmsConfig.EMAIL_QUEUE_NAME;
 
 /**
  * Custom jms listener.
@@ -26,7 +26,7 @@ public class JmsEmailListener {
      *
      * @param email Email to send confirm.
      */
-    @JmsListener(destination = JMS_QUEUE, containerFactory = "factory")
+    @JmsListener(destination = EMAIL_QUEUE_NAME, containerFactory = "factory")
     public final void receiveEmail(final Email email) {
         try {
             EmailSender.sendConfirm(email);

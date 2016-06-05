@@ -11,7 +11,7 @@ public interface MessageService {
     /**
      * Send confirm email for user.
      * @param user User for confirm.
-     * @param request
+     * @param request Servlet request.
      */
     void sendConfirmToUser(final User user, HttpServletRequest request);
 }
