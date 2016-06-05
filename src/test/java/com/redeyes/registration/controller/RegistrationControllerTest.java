@@ -8,8 +8,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+/**
+ * Registrations controller tests.
+ */
 public class RegistrationControllerTest extends AbstractControllerTest {
 
+    /**
+     * Test get registration view.
+     *
+     * @throws Exception Exception.
+     */
     @Test
     public void testHome() throws Exception {
         mockMvc.perform(get(REGISTRATION_URI))
@@ -17,6 +25,11 @@ public class RegistrationControllerTest extends AbstractControllerTest {
                 .andExpect(view().name("registration"));
     }
 
+    /**
+     * Test registration user.
+     *
+     * @throws Exception Exception.
+     */
     @Test
     public void testPost() throws Exception {
         mockMvc.perform(post(REGISTRATION_URI)
@@ -25,6 +38,11 @@ public class RegistrationControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Test registration registered user.
+     *
+     * @throws Exception Exception.
+     */
     @Test
     public void testUniqueEmail() throws Exception {
         mockMvc.perform(post(REGISTRATION_URI)
@@ -32,6 +50,11 @@ public class RegistrationControllerTest extends AbstractControllerTest {
                 .param("password", "12345"));
     }
 
+    /**
+     * Test registration user with empty fields.
+     *
+     * @throws Exception Exception.
+     */
     @Test
     public void testPostEmptyUser() throws Exception {
         mockMvc.perform(post(REGISTRATION_URI)
@@ -39,6 +62,11 @@ public class RegistrationControllerTest extends AbstractControllerTest {
                 .param("password", ""));
     }
 
+    /**
+     * Test user with error email.
+     *
+     * @throws Exception Exception.
+     */
     @Test
     public void testPostInvalidEmail() throws Exception {
         mockMvc.perform(post(REGISTRATION_URI)
